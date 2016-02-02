@@ -31,10 +31,9 @@
             <i class="icon ion-navicon"><span class="h3 text-stable">&nbsp;Fresh Market</span></i>
         </button>
       </ion-nav-buttons>
-      <ion-nav-buttons side="right">
+      <ion-nav-buttons side="right" >
         <button class="button button-icon" menu-toggle="right">
-            <i class="icon ion-ios-cart"><span class="h5 text-stable">$ {{totalprice | number:2}}</span> </i>
-                      
+            <i class="icon ion-ios-cart"><span class="h5 text-stable" ng-show="showcart">$ {{totalprice | number:2}}</span> </i>
         </button>
       </ion-nav-buttons>        
     </ion-nav-bar>

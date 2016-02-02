@@ -1,0 +1,22 @@
+<ion-modal-view>
+    <ion-header-bar class="bar-stable bar-positive">
+      <h1 class="title">Checkout</h1>
+      <div class="buttons">
+        <button class="button button-clear button-icon ion-close-circled" ng-click="closeCheckout()"></button>      
+      </div>        
+    </ion-header-bar>
+      <ion-content>
+        <ion-list show-delete="shouldShowDelete">
+            <ion-item class="item-avatar" ng-repeat="item in items" href="#/app/cart/{{item.id}}">
+                <img ng-src="/thumb/{{item.id}}.jpg">
+              <h2>{{item.title}}</h2>
+                <p>
+              {{item.quantity}} x  {{item.unitprice}} = {{item.itemTotalPrice | number:2}}   
+                </p>
+            </ion-item>
+          </ion-list>
+      </ion-content>
+    <ion-footer-bar class="bar bar-balanced">
+         <button class="button button-clear" ng-click="edit()"><b>Place Order ( $ {{totalprice|number:2}} )</b></button>
+    </ion-footer-bar>
+</ion-modal-view>

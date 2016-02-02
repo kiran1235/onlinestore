@@ -37,12 +37,14 @@ angular.module('fresh.services', [])
                 self.items[i].itemTotalPrice= item.unitprice*self.items[i].quantity;
                 self.items[i].itemTotalPrice= item.unitprice*self.items[i].quantity;
                 self.TotalPrice+=item.unitprice;
+                self.TotalQuantity+=1;
                 return self.items[i].quantity;
             }
            //self.TotalPrice+=self.items[i].itemTotalPrice;
             
         }
         self.TotalPrice+=item.unitprice*item.quantity; 
+        self.TotalQuantity+=1;
         self.items.push(item);
         return 1;
     };
@@ -55,15 +57,21 @@ angular.module('fresh.services', [])
             if(self.items[i].id==item.id){
                 self.items[i].quantity--;
                 if(self.items[i].quantity<=0){
-                 self.items[i].quantity=0;
-                self.items[i].itemTotalPrice= 0;
-                self.TotalPrice-=item.unitprice;                 }else{
+//                 self.items[i].quantity=0;
+//                self.items[i].itemTotalPrice= 0;
+                    self.items.splice(i,1);                    
+                self.TotalPrice-=item.unitprice; 
+                self.TotalQuantity-=1; 
+                    return 0;
+                }else{
                 self.items[i].itemTotalPrice= item.unitprice*self.items[i].quantity;
-           self.TotalPrice-=item.unitprice;                    
+                self.TotalPrice-=item.unitprice; 
+                self.TotalQuantity-=1;    
                 }
                 
                 if(self.TotalPrice<=0){
                     self.TotalPrice=0;
+                    self.TotalQuantity=0;
                 }
 
                 
@@ -75,9 +83,19 @@ angular.module('fresh.services', [])
     }
     
     self.getTotalPrice=function(){
+        if(self.TotalPrice<=0){
+            self.TotalPrice=0;
+            self.TotalQuantity=0;
+        }        
         return self.TotalPrice;
     }
-    
+    self.getTotalQuantity=function(){
+        if(self.TotalQuantity<=0){
+            self.TotalPrice=0;
+            self.TotalQuantity=0;
+        }        
+        return self.TotalQuantity;
+    }   
     self.getItems=function(){
       //return $http.get('http://localhost:3000/customers');
 //        return [

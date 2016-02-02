@@ -41,12 +41,19 @@ angular.module('fresh.controllers', [])
   };
     
     $scope.cartservice=$cartservice;
-    
+    $scope.showcart=false;
     $scope.$watch("cartservice.getTotalPrice()",function(newval){
         $scope.totalprice=newval;
     });
-    
-    
+    $scope.$watch("cartservice.getTotalQuantity()",function(newval){
+        if(newval>=1){
+            $scope.showcart=true;
+        }else{
+            $scope.showcart=false;
+        }
+        $scope.totalquantity=newval;
+        
+    });
 })
 
 .controller('PlaylistsCtrl', function($scope,$productservice,$cartservice) {
@@ -60,7 +67,7 @@ angular.module('fresh.controllers', [])
      $scope.totalprice=$cartservice.getTotalPrice();  
   };
 })
-.controller('CartCtrl',function($scope,$cartservice) {
+.controller('CartCtrl',function($scope,$cartservice,$ionicModal) {
     $scope.totalprice=0;
     $scope.cartservice=$cartservice;
     $scope.$watch("cartservice.getTotalPrice()",function(newval){
@@ -71,6 +78,34 @@ angular.module('fresh.controllers', [])
     $scope.edit=function(){
         $scope.shouldShowDelete=!$scope.shouldShowDelete;
     }
+    // Create the login modal that we will use later
+    $ionicModal.fromTemplateUrl('templates/checkout.html', {
+    scope: $scope
+    }).then(function(modal) {
+    $scope.modal = modal;
+    });
+
+    // Triggered in the login modal to close it
+    $scope.closeCheckout = function() {
+    $scope.modal.hide();
+    };
+
+    // Open the login modal
+    $scope.showCheckout = function() {
+    $scope.modal.show();
+    };
+
+//    // Perform the login action when the user submits the login form
+//    $scope.doLogin = function() {
+//    console.log('Doing login', $scope.loginData);
+//
+//    // Simulate a login delay. Remove this and replace with your login
+//    // code if using a login system
+//    $timeout(function() {
+//    $scope.closeLogin();
+//    }, 1000);
+//    };    
+    
 })
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
