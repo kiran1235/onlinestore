@@ -9,9 +9,13 @@
 <ion-view view-title="Fresh Market">
   <ion-content>
     <ion-list show-delete="shouldShowDelete">
-        <ion-item ng-repeat="item in items" href="#/app/cart/{{item.id}}">
-            <span class="badge badge-balanced">{{item.quantity}}</span>             
-          {{item.title}}
+        <ion-item class="item-avatar" ng-repeat="item in items" href="#/app/cart/{{item.id}}">
+            <img ng-src="/thumb/{{item.id}}.jpg">
+          <h2>{{item.title}}</h2>
+            <p>
+          {{item.quantity}} x  {{item.unitprice}} = {{item.itemTotalPrice | number:2}}   
+                
+            </p>
     <ion-delete-button class="ion-minus-circled"
                        ng-click="items.splice($index, 1)">
     </ion-delete-button>
@@ -20,5 +24,5 @@
   </ion-content>
 </ion-view>
 <ion-footer-bar class="bar bar-assertive">
-     <button class="button pull-right button-clear" ng-click="edit()"><b>Checkout</b></button>
+     <button class="button button-clear" ng-click="edit()"><b>Checkout ( $ {{totalprice|number:2}} )</b></button>
 </ion-footer-bar>

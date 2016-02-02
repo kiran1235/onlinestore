@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 //this is fresh
-angular.module('fresh', ['ionic', 'fresh.controllers'])
+angular.module('fresh', ['ionic', 'fresh.controllers','fresh.services'])
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {

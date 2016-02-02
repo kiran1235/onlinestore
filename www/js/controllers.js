@@ -1,6 +1,6 @@
 angular.module('fresh.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout,$cartservice) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -39,32 +39,34 @@ angular.module('fresh.controllers', [])
       $scope.closeLogin();
     }, 1000);
   };
+    
+    $scope.cartservice=$cartservice;
+    
+    $scope.$watch("cartservice.getTotalPrice()",function(newval){
+        $scope.totalprice=newval;
+    });
+    
+    
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.items = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 },
-    { title: 'Item', id: 7 },      
-    { title: 'Itemsds', id: 8 },      
-    { title: '12dsd', id: 9 },      
-    { title: 'rerxccdfd', id: 10 },      
-    { title: 'dfdf dfd d dfd ', id: 11 }            
-  ];
+.controller('PlaylistsCtrl', function($scope,$productservice,$cartservice) {
+  $scope.items = $productservice.getItems();
+  $scope.addToCart=function(item){
+     item.quantity=$cartservice.addItem(item);
+     $scope.totalprice=$cartservice.getTotalPrice();  
+  };
+  $scope.removeFromCart=function(item){
+     item.quantity=$cartservice.removeItem(item);
+     $scope.totalprice=$cartservice.getTotalPrice();  
+  };
 })
-.controller('CartCtrl', function($scope) {
-  $scope.items = [
-    { title: 'Reggae', id: 1, quantity: 10 },
-    { title: 'Chill', id: 2, quantity: 10 },
-    { title: 'Dubstep', id: 3, quantity: 10 },
-    { title: 'Indie', id: 4, quantity: 10 },
-    { title: 'Rap', id: 5, quantity: 10 },
-    { title: 'Cowbell', id: 6, quantity: 10 }
-  ];
+.controller('CartCtrl',function($scope,$cartservice) {
+    $scope.totalprice=0;
+    $scope.cartservice=$cartservice;
+    $scope.$watch("cartservice.getTotalPrice()",function(newval){
+        $scope.totalprice=newval;
+    });    
+    $scope.items=$cartservice.getItems();
     $scope.shouldShowDelete=false
     $scope.edit=function(){
         $scope.shouldShowDelete=!$scope.shouldShowDelete;
