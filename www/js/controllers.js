@@ -42,13 +42,18 @@ angular.module('fresh.controllers', [])
 })
 
 .controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
+  $scope.items = [
     { title: 'Reggae', id: 1 },
     { title: 'Chill', id: 2 },
     { title: 'Dubstep', id: 3 },
     { title: 'Indie', id: 4 },
     { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
+    { title: 'Cowbell', id: 6 },
+    { title: 'Item', id: 7 },      
+    { title: 'Itemsds', id: 8 },      
+    { title: '12dsd', id: 9 },      
+    { title: 'rerxccdfd', id: 10 },      
+    { title: 'dfdf dfd d dfd ', id: 11 }            
   ];
 })
 .controller('CartCtrl', function($scope) {

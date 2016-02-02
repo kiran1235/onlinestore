@@ -1,1 +1,13 @@
 /* Empty. Add your own CSS if you like */
+
+.text-stable{
+    color:white;
+}
+.product-list-view .item-content{
+    padding-right:10px;
+    padding-bottom:1px;
+}
+
+.product-list-view-item-link{
+    text-decoration: none;
+}
