@@ -8,6 +8,17 @@
     padding-bottom:1px;
 }
 
-.product-list-view-item-link{
+.product-list-view-item-link, .list-view-item-link{
     text-decoration: none;
+}
+
+.list-view-item-link i{
+    color:darkgrey;
+}
+
+.text-small{
+    font-size: 10pt;
+}
+.text-grey{
+    color:darkgray;
 }

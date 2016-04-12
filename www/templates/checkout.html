@@ -1,0 +1,60 @@
+<ion-view view-title="Checkout" hide-back-button="false" hide-nav-bar="false">
+  <ion-content>
+    <div class="list">
+      <label class="item">
+            <a  ui-sref="app.welcome({cutsomer:customer})" class="list-view-item-link">
+                <h2><i class="icon ion-location placeholder-icon"></i> Delivery Address</h2>
+                <i>
+                  {{customer.deliveryAddress.formattedaddress}}
+                </i>
+            </a>
+      </label>        
+      <label class="item item-input item-floating-label">
+        <span class="input-label">First Name</span>
+        <input type="text" placeholder="First Name" ng-model="customer.firstname">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Last Name</span>
+        <input type="text" placeholder="Last Name" ng-model="customer.lastname">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Email</span>
+        <input type="text" placeholder="Email" ng-model="customer.email">
+      </label>
+      <label class="item item-input item-input-select">
+        <span class="input-label">Delivery Date</span>
+        <select ng-model="scheduledate"> 
+                               <option ng-repeat="dd in availiabledates"  ng-selected="{{dd.selected}}" value="{{dd}}" style="text-align:center">{{dd}}</option>            
+            
+        </select>
+        &nbsp;&nbsp;  
+        <select ng-model="scheduletime"> 
+                               <option ng-repeat="tt in availiabletimes"  ng-selected="{{tt.selected}}" value="{{tt}}" style="text-align:center">{{tt}}</option>            
+        </select>          
+      </label>
+        
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Delivery comments</span>
+        <input type="text" placeholder="Delivery comments" ng-model="comments">
+      </label>
+    </div>
+    
+      
+      
+      
+    <ion-list>
+        <ion-item class="item-avatar" ng-repeat="product in items">
+            <img ng-src="thumb/1.jpg">
+          <h2>{{product.name}}</h2>
+            <i class="text-small text-grey">from {{product.Vendors[0].name}}</i>
+            <p>
+                {{product.cartquantity}} {{product.model}} x  $ {{product.Inventories[0].unitprice}} = $ {{product.cartquantity*product.Inventories[0].unitprice | number:2}}   
+            </p>
+        </ion-item>
+    </ion-list>
+  </ion-content>
+
+<ion-footer-bar class="bar bar-positive">
+     <button class="button button-clear" ng-click="placeorder()"><b>Place Order ( $ {{totalvalue() |number:2}} )</b></button>
+</ion-footer-bar>    
+</ion-view>

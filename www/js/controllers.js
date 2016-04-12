@@ -6,8 +6,9 @@ angular.module('fresh.controllers', [])
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
   // listen for the $ionicView.enter event:
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+//  $scope.$on('$ionicView.enter', function(e) {
+//      $scope.modal.show();
+//  });
 
   // Form data for the login modal
   $scope.loginData = {};
@@ -40,16 +41,13 @@ angular.module('fresh.controllers', [])
     }, 1000);
   };
     
-    $scope.cartservice=$cartservice;
-    
-    $scope.$watch("cartservice.getTotalPrice()",function(newval){
-        $scope.totalprice=newval;
-    });
-    
-    
+})
+.controller("WelcomeCtrl",function($scope,$cartservice))
+.controller('VendorCtrl', function($scope,$vendorservice,$cartservice) {
+    $scope.items = $vendorservice.getItems();
 })
 
-.controller('PlaylistsCtrl', function($scope,$productservice,$cartservice) {
+.controller('ItemCtrl', function($scope,$productservice,$cartservice) {
   $scope.items = $productservice.getItems();
   $scope.addToCart=function(item){
      item.quantity=$cartservice.addItem(item);
@@ -59,6 +57,7 @@ angular.module('fresh.controllers', [])
      item.quantity=$cartservice.removeItem(item);
      $scope.totalprice=$cartservice.getTotalPrice();  
   };
+    
 })
 .controller('CartCtrl',function($scope,$cartservice) {
     $scope.totalprice=0;

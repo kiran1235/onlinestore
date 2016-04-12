@@ -1,0 +1,40 @@
+<ion-view view-title="" hide-back-button="true" hide-nav-bar="false">
+    <ion-nav-buttons side="left">
+        <button class="button button-icon" menu-toggle="left">
+            <i class="icon ion-navicon"><span class="h3 text-stable">&nbsp;Fresh Market</span></i>
+        </button>
+    </ion-nav-buttons> 
+      <ion-nav-buttons side="right">
+        <button class="button button-icon" menu-toggle="right">
+            <i class="icon ion-ios-cart"><span class="h5 text-stable">$ {{totalvalue() | number:2}}</span> </i>    
+        </button>
+      </ion-nav-buttons>    
+    
+    <ion-content class="center" padding="false" scroll="false">         
+        <ion-list>
+        <ion-item>
+            <a  ui-sref="app.welcome({cutsomer:customer})" class="list-view-item-link">
+            <h2><i class="icon ion-location placeholder-icon"></i> Delivery Address</h2>
+            <i>
+              {{customer.deliveryAddress.formattedaddress}}
+            </i>
+            </a>
+        </ion-item>
+        <ion-item ng-show="showvendors()" style="text-align:center">
+            <button class="button button-positive" ng-click="getVendors()">Find Stores</button>
+        </ion-item>            
+        <ion-item ng-repeat="vendor in vendors">
+            <a  ui-sref="app.vendor({vendor:vendor,id:vendor.id})" class="list-view-item-link">
+            <h2>{{vendor.name}} <i class="text-small text-grey">{{vendor.distance | number:2}} Miles</i></h2>
+            <i class="text-small text-grey">
+              {{vendor.formattedAddress}}
+            </i>
+            </a>
+        </ion-item>
+        </ion-list>
+        
+
+        
+        
+    </ion-content>
+</ion-view>

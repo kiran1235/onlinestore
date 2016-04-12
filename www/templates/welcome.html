@@ -1,0 +1,37 @@
+<ion-view view-title="" hide-back-button="true" hide-nav-bar="true">
+  <ion-nav-buttons side="left">
+    <button class="button button-icon" menu-toggle="left">
+        <i class="icon ion-navicon"><span class="h3 text-stable">&nbsp;Fresh Market</span></i>
+    </button>
+  </ion-nav-buttons>    
+  <ion-content class="center" padding="true" scroll="false">
+      <div class="row row-center" style="height:100%;" ng-hide="{{showvendors}}">
+          <div class="col col-center">
+              <div class="row">
+                  <div class="col">
+                        <label class="item item-input">
+                            <i class="icon ion-location placeholder-icon"></i>
+                            <input type="text" placeholder="Street Address" ng-model="customer.deliveryAddress.street">
+                        </label>  
+                  </div>
+                </div>  
+              <div class="row">
+                  <div class="col-60" style="margin-left:5px;">
+                        <label class="item item-input item-select">
+                            <div class="input-label">
+                                &nbsp;
+                            </div>
+                            <select ng-model="customer.deliveryAddress.city" >
+                                <option ng-repeat="city in cities"  ng-selected="{{city.selected}}" value="{{city}}" style="text-align:center">{{city}}</option>
+                            </select>
+                            
+                        </label>                   
+                    </div>  
+                    <div class="col-40" style="margin-left:5px;">  
+                        <button class="button button-positive" ng-click="goToVendor()">Find Stores</button>
+                    </div>    
+            </div>      
+          </div>
+      </div>
+  </ion-content>
+</ion-view>

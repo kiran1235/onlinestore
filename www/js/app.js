@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 //this is fresh
-angular.module('fresh', ['ionic', 'fresh.controllers','fresh.services'])
+angular.module('fresh', ['ionic', 'fresh.controllers','fresh.services','ngIOS9UIWebViewPatch'])
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -23,17 +23,38 @@ angular.module('fresh', ['ionic', 'fresh.controllers','fresh.services'])
     }
   });
 })
+.directive( 'goClick', function ( $location ) {
+  return function ( scope, element, attrs ) {
+    var path;
 
+    attrs.$observe( 'goClick', function (val) {
+      path = val;
+    });
+
+    element.bind( 'click', function () {
+      scope.$apply( function () {
+        $location.path( path );
+      });
+    });
+  };
+})
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
-
     .state('app', {
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
-
+  
+  .state('app.welcome', {
+    url: '/welcome',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/welcome.html'
+      }
+    }
+  })
   .state('app.search', {
     url: '/search',
     views: {
@@ -51,17 +72,31 @@ angular.module('fresh', ['ionic', 'fresh.controllers','fresh.services'])
         }
       }
     })
-    .state('app.playlists', {
-      url: '/playlists',
+    .state('app.vendors', {
+      url: '/vendors',
       views: {
         'menuContent': {
-          templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
+          templateUrl: 'templates/vendors.html',
+          controller: 'VendorCtrl'
         },
       'cartContent':{
           templateUrl: 'templates/cart.html',
           controller: 'CartCtrl'
       }
+      }
+    })
+  
+    .state('app.playlists', {
+      url: '/vendors/:vendorid/items',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/items.html',
+          controller: 'ItemCtrl'
+        },
+      'cartContent':{
+          templateUrl: 'templates/cart.html',
+          controller: 'CartCtrl'
+        }
       }
     })
 
@@ -75,5 +110,6 @@ angular.module('fresh', ['ionic', 'fresh.controllers','fresh.services'])
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+  $urlRouterProvider.otherwise('/app/welcome');
+    
 });
