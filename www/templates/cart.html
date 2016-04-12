@@ -1,6 +1,7 @@
+<ion-view>
     <ion-header-bar class="bar-stable bar-dark">
-        
       <h1 class="title">Cart</h1>
+<<<<<<< HEAD
   <div class="buttons">
     <button class="button button-clear button-icon ion-trash-a" ng-click="edit()" ng-hide="shouldShowDelete"></button>
     <button class="button button-clear button-icon ion-checkmark-circled" ng-click="edit()" ng-show="shouldShowDelete"></button>
@@ -26,3 +27,28 @@
 <ion-footer-bar class="bar bar-assertive">
      <button class="button button-clear" ng-click="checkout()"><b>Checkout ( $ {{totalvalue() |number:2}} )</b></button>
 </ion-footer-bar>
+=======
+      <div class="buttons">
+        <button class="button button-clear button-icon ion-trash-a" ng-click="edit()" ng-hide="shouldShowDelete"></button>
+        <button class="button button-clear button-icon ion-checkmark-circled" ng-click="edit()" ng-show="shouldShowDelete"></button>      
+      </div>        
+    </ion-header-bar>
+      <ion-content>
+        <ion-list show-delete="shouldShowDelete">
+            <ion-item class="item-avatar" ng-repeat="item in items" href="#/app/cart/{{item.id}}">
+                <img ng-src="/thumb/{{item.id}}.jpg">
+                  <h2>{{item.title}}</h2>
+                <p>
+                  {{item.quantity}} x  {{item.unitprice}} = {{item.itemTotalPrice | number:2}}   
+                </p>
+                <ion-delete-button class="ion-minus-circled"
+                   ng-click="items.splice($index, 1)">
+                </ion-delete-button>
+            </ion-item>
+          </ion-list>
+      </ion-content>
+    <ion-footer-bar class="bar bar-assertive">
+         <button class="button button-clear" ng-click="showCheckout()"><b>Checkout ( $ {{totalprice|number:2}} )</b></button>
+    </ion-footer-bar
+</ion-view>
+>>>>>>> 9fdb478785db4b47f6315452d29b697aeabc3eff

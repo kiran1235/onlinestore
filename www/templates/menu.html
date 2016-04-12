@@ -16,6 +16,7 @@
     <ion-nav-bar class="bar-stable bar-balanced">
       <ion-nav-back-button>
       </ion-nav-back-button>
+<<<<<<< HEAD
    
 <!--
   <ion-nav-buttons side="left">
@@ -30,6 +31,20 @@
   </ion-nav-buttons>    
 -->
       </ion-nav-bar>
+=======
+
+      <ion-nav-buttons side="left">
+        <button class="button button-icon" menu-toggle="left">
+            <i class="icon ion-navicon"><span class="h3 text-stable">&nbsp;Fresh Market</span></i>
+        </button>
+      </ion-nav-buttons>
+      <ion-nav-buttons side="right" >
+        <button class="button button-icon" menu-toggle="right">
+            <i class="icon ion-ios-cart"><span class="h5 text-stable" ng-show="showcart">$ {{totalprice | number:2}}</span> </i>
+        </button>
+      </ion-nav-buttons>        
+    </ion-nav-bar>
+>>>>>>> 9fdb478785db4b47f6315452d29b697aeabc3eff
     <ion-nav-view name="menuContent"></ion-nav-view>
   </ion-side-menu-content>
     
