@@ -39,6 +39,7 @@ angular.module('store.services', [])
         }
         this.totalvalue=0;
         this.addItem=function(item){
+                 
           for (var i = 0; i < this.items.length; i++) {
             if(item.id==this.items[i].id){
     
@@ -107,6 +108,15 @@ angular.module('store.services', [])
             }            
         }
         
+        if(this.scheduledate ==undefined){
+            this.scheduledate='12/31/1900';
+        }
+
+        if(this.scheduletime ==undefined){
+            this.scheduletime='7 PM';
+        }
+        
+        
         this.setDeliveryAddress=function(address){
             this.deliveryAddress=address;
         }
@@ -126,7 +136,9 @@ angular.module('store.controllers', [])
             firstname:$customerservice.firstname,
             lastname:$customerservice.lastname,
             email:$customerservice.email,
-            deliveryAddress:$customerservice.deliveryAddress
+            deliveryAddress:$customerservice.deliveryAddress,
+            scheduledate:$customerservice.scheduledate,
+            scheduletime:$customerservice.scheduletime
         };
         $scope.comments="none";
         $scope.items=$cartservice.items;
@@ -164,24 +176,92 @@ angular.module('store.controllers', [])
         
         $scope.availiabledates=$scope.getAvailiableDates(7);
         $scope.availiabletimes=["9 AM","10 AM","11 AM","12 PM","1 PM","2 PM","3 PM","4 PM","5 PM","6 PM","7 PM"];
-        
-    
-        $scope.scheduledate=$scope.availiabledates[2];
-        $scope.scheduletime="7 PM";
-        $scope.placeorder=function(){
-            
-            var _build={
-                customer:{
+            $scope.timeformats=["09:00:00","10:00:00","11:00:00","12:00:00","13:00:00","14:00:00","15:00:00","16:00:00","17:00:00","18:00:00","19:00:00"];
+
+        $scope.buildorder=function(){
+            var _l=10;
+            var _c=0;
+            for(_i=0;_i<10;_i++){
+                if($scope.customer.scheduletime==$scope.availiabletimes[_i]){
+                    _c=_i;
+                    break;
+                }
+            };            
+                var _customer={
                     name:$scope.customer.lastname+","+$scope.customer.firstname,
                     email:$scope.customer.email,
                     deliveryAddress:$customerservice.getDeliveryAddress(),
-                },
-                scheduleAt:$scope.scheduledate,
-                items:$cartservice.items
-            };
+                    scheduledate:$scope.customer.scheduledate,
+                    scheduletime:$scope.timeformats[_c]
+                };
+                var _items=$cartservice.items;
+                
+                var _prevendor=_items[0].Vendors.id;
+                var _vendors=[];
+                var _il=_items.length;
             
-            var _jsonstring=$base64.encode(angular.toJson(_build,false));
+                var _currentvendor={
+                    id:_items[0].Vendors.id,
+                    name:_items[0].Vendors.name,
+                    vendorcontactid:_items[0].Vendors.vendorcontactid,
+                    vendorcontactaddressbookid:_items[0].Vendors.vendorcontactaddressbookid,
+                    Products:[]
+                };
+                for(_i=0;_i<_il;_i++){
+                    if(_prevendor!=_items[_i].Vendors.id){
+                        _vendors.push(_currentvendor);
+                    _currentvendor={
+                    id:_items[_i].Vendors.id,
+                    name:_items[_i].Vendors.name,
+                    vendorcontactid:_items[_i].Vendors.vendorcontactid,
+                    vendorcontactaddressbookid:_items[_i].Vendors.vendorcontactaddressbookid,
+                        Products:[]
+                };                 
+                        _prevendor=_items[_i].Vendors.id;
+                    }
+                    _currentvendor.Products.push({
+                        id:_items[_i].id,
+                        name:_items[_i].name,
+                        category:_items[_i].category,
+                        subcategory:_items[_i].subcategory,
+                        type:_items[_i].type,
+                        model:_items[_i].model,
+                        cartquantity:_items[_i].cartquantity,
+                        Inventories:_items[_i].Inventories,
+                    });
+                    
+                }
+                
+                _vendors.push(_currentvendor);
             
+                return {
+                    customer:_customer,
+                    items:_vendors
+                }
+        }
+    
+        $scope.placeorder=function(){
+            
+
+            
+            console.log(angular.toJson($scope.buildorder(),false));
+            
+            
+            var _jsonstring=$base64.encode(angular.toJson($scope.buildorder(),false))
+            ;
+            
+            
+            
+//            var _jsonstring=$base64.encode(angular.toJson({
+//                customer:{
+//                    name:$scope.customer.lastname+","+$scope.customer.firstname,
+//                    email:$scope.customer.email,
+//                    deliveryAddress:$customerservice.getDeliveryAddress(),
+//                    scheduledate:$scope.customer.scheduledate,
+//                    scheduletime:$scope.timeformats[_c]
+//                },
+//                items:$cartservice.items
+//            },false));
             $cartservice.createorder({json:_jsonstring}).then(function(response){
                console.log(response.data); 
             });
@@ -221,6 +301,7 @@ angular.module('store.controllers', [])
               $scope.products=response.data.products;
               for (var i = 0; i < $scope.products.length; i++) {
                 $scope.products[i].cartquantity=0;
+                $scope.products[i].Vendors=$scope.vendor; 
               }
             });
         };
@@ -275,7 +356,7 @@ angular.module('store.controllers', [])
                                     'id':_vendors[_i].id,
                                     'name':_vendors[_i].name,
                                     'vendorcontactid':_vendors[_i].VendorContacts[_ci].id,
-                                    'formattedAddress':_vendors[_i].VendorContacts[_ci].VendorContactAddressBooks[_cai].formattedaddress,
+                                   'vendorcontactaddressbookid':_vendors[_i].VendorContacts[_ci].VendorContactAddressBooks[_cai].id, 'formattedAddress':_vendors[_i].VendorContacts[_ci].VendorContactAddressBooks[_cai].formattedaddress,
                                     'latitude':_vendors[_i].VendorContacts[_ci].VendorContactAddressBooks[_cai].latitude,
                                     'longitude':_vendors[_i].VendorContacts[_ci].VendorContactAddressBooks[_cai].longitude,
                                     'distance':$locationservice.calcDistance($scope.customer.deliveryAddress.latitude,$scope.customer.deliveryAddress.longitude,_vendors[_i].VendorContacts[_ci].VendorContactAddressBooks[_cai].latitude,_vendors[_i].VendorContacts[_ci].VendorContactAddressBooks[_cai].longitude)
@@ -304,13 +385,14 @@ angular.module('store.controllers', [])
         }
     })
     .controller('AppCtrl', function($state,$scope,$locationservice,$vendorservice,$cartservice,$customerservice) {
+         $scope.onerror=false;
          $scope.showvendors=false;
          $scope.goToVendor=function(){
             _street=$scope.customer.deliveryAddress.street;
             _city=$scope.customer.deliveryAddress.city;
             _state=$scope.customer.deliveryAddress.state;
             _zipcode=$scope.customer.deliveryAddress.zipcode;
-            $locationservice.findAddress($scope.customer.deliveryAddress.street,$scope.customer.deliveryAddress.city,$scope.customer.deliveryAddress.state).then(function(location){
+             $locationservice.findAddress($scope.customer.deliveryAddress.street,$scope.customer.deliveryAddress.city,$scope.customer.deliveryAddress.state).then(function(location){
                 
                 var _n=location.data.results[0].address_components.length;
                 
@@ -350,7 +432,7 @@ angular.module('store.controllers', [])
                $customerservice.setDeliveryAddress($scope.customer.deliveryAddress);            
                $state.go('app.vendors',{'customer':$scope.customer});
            }).catch(function(error){
-
+                 $scope.onerror=true;
            });
          }
          $scope.Math = window.Math;

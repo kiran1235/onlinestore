@@ -7,6 +7,11 @@
   <ion-content class="center" padding="true" scroll="false">
       <div class="row row-center" style="height:100%;" ng-hide="{{showvendors}}">
           <div class="col col-center">
+              <div class="row" ng-show="onerror">
+                  <div class="col">
+                      Invalid Address
+                  </div>
+              </div>
               <div class="row">
                   <div class="col">
                         <label class="item item-input">
@@ -22,7 +27,7 @@
                                 &nbsp;
                             </div>
                             <select ng-model="customer.deliveryAddress.city" >
-                                <option ng-repeat="city in cities"  ng-selected="{{city.selected}}" value="{{city}}" style="text-align:center">{{city}}</option>
+                                <option ng-repeat="city in cities"  ng-selected="{{city.selected}}" value="{{city}}" >{{city}}</option>
                             </select>
                             
                         </label>                   

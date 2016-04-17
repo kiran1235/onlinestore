@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <ion-view view-title="Checkout" hide-back-button="false" hide-nav-bar="false">
   <ion-content>
     <div class="list">
@@ -24,25 +23,23 @@
       </label>
       <label class="item item-input item-input-select">
         <span class="input-label">Delivery Date</span>
-        <select ng-model="scheduledate"> 
-                               <option ng-repeat="dd in availiabledates"  ng-selected="{{dd.selected}}" value="{{dd}}" style="text-align:center">{{dd}}</option>            
+        <select ng-model="customer.scheduledate"> 
+                               <option ng-repeat="dd in availiabledates"  ng-selected="{{dd.selected}}" value="{{dd}}" >{{dd}}</option>            
             
         </select>
         &nbsp;&nbsp;  
-        <select ng-model="scheduletime"> 
-                               <option ng-repeat="tt in availiabletimes"  ng-selected="{{tt.selected}}" value="{{tt}}" style="text-align:center">{{tt}}</option>            
+        <select ng-model="customer.scheduletime"> 
+                               <option ng-repeat="tt in availiabletimes"  ng-selected="{{tt.selected}}" value="{{tt}}" >{{tt}}</option>            
         </select>          
       </label>
         
       <label class="item item-input item-floating-label">
         <span class="input-label">Delivery comments</span>
         <input type="text" placeholder="Delivery comments" ng-model="comments">
+        
       </label>
     </div>
     
-      
-      
-      
     <ion-list>
         <ion-item class="item-avatar" ng-repeat="product in items">
             <img ng-src="thumb/1.jpg">
@@ -59,7 +56,8 @@
      <button class="button button-clear" ng-click="placeorder()"><b>Place Order ( $ {{totalvalue() |number:2}} )</b></button>
 </ion-footer-bar>    
 </ion-view>
-=======
+
+<!--
 <ion-modal-view>
     <ion-header-bar class="bar-stable bar-positive">
       <h1 class="title">Checkout</h1>
@@ -82,4 +80,5 @@
          <button class="button button-clear" ng-click="edit()"><b>Place Order ( $ {{totalprice|number:2}} )</b></button>
     </ion-footer-bar>
 </ion-modal-view>
->>>>>>> 9fdb478785db4b47f6315452d29b697aeabc3eff
+-->
+
