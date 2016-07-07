@@ -452,7 +452,8 @@ angular
     .run(function ($ionicPlatform,$rootScope, $state, $stateParams,$http) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
-        $rootScope.$domain="http://localhost";
+        //$rootScope.$domain="http://localhost";
+        $rootScope.$domain="http://52.201.247.83";
         $ionicPlatform.ready(function() {
             if(window.cordova && window.cordova.plugins.Keyboard) {
               // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

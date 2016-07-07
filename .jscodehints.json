@@ -1,0 +1,17 @@
+{
+     "excluded-directories" : ["/Users/kiran/Development/Projects/mobile/ionic/onlinestore/plugins/", "/tests-.*files/"],  
+     "max-file-count": 100,   
+     "max-file-size": 524288,  
+     "excluded-files": [
+        "/Users/kiran/Development/Projects/mobile/ionic/onlinestore/www/lib/ionic/js/angular/angular.min.js",
+        "/Users/kiran/Development/Projects/mobile/ionic/onlinestore/plugins/*",
+        "/Users/kiran/Development/Projects/mobile/ionic/onlinestore/plugins/cordova-plugin-splashscreen/src/tizen/SplashScreenProxy.js",
+        "/Users/kiran/Development/Projects/mobile/ionic/onlinestore/plugins/cordova-plugin-splashscreen/tests/tests.js",
+        "/Users/kiran/Development/Projects/mobile/ionic/onlinestore/plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+        "/Users/kiran/Development/Projects/mobile/ionic/onlinestore/plugins/cordova-plugin-splashscreen/www/windows/SplashScreenProxy.js"
+    ]
+}
+
+
+
+//.jscodehints
